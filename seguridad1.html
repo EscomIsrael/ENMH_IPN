@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Seguridad en Sistemas Operativos - Investigación IPN ESCOM">
+    <title>Seguridad en SO - IPN ESCOM</title>
+    <link rel="stylesheet" href="estilos.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Estilos adicionales para código */
+        .code-block {
+            background-color: #f5f5f5;
+            border-left: 4px solid #e98300;
+            padding: 1rem;
+            font-family: 'Courier New', monospace;
+            margin: 1.5rem 0;
+            overflow-x: auto;
+            border-radius: 0 4px 4px 0;
+        }
+        
+        .code-comment {
+            color: #6a9955;
+        }
+        
+        .code-keyword {
+            color: #569cd6;
+        }
+        
+        .code-function {
+            color: #dcdcaa;
+        }
+        
+        .code-string {
+            color: #ce9178;
+        }
+        
+        /* Estilos para el cuestionario */
+        .quiz-container {
+            background-color: #fff;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-top: 3rem;
+            border-top: 4px solid #1a3e72;
+        }
+        
+        .quiz-question {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .quiz-question:last-child {
+            border-bottom: none;
+        }
+        
+        .quiz-options {
+            margin-left: 1.5rem;
+        }
+        
+        .quiz-option {
+            margin-bottom: 0.5rem;
+        }
+        
+        .quiz-submit {
+            background-color: #1a3e72;
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            margin-top: 1rem;
+            transition: background-color 0.3s;
+        }
+        
+        .quiz-submit:hover {
+            background-color: #0d2b56;
+        }
+        
+        .quiz-results {
+            margin-top: 2rem;
+            padding: 1rem;
+            border-radius: 4px;
+            display: none;
+        }
+        
+        .correct {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        
+        .incorrect {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header mejorado -->
+    <header class="main-header">
+        <div class="header-top">
+            <div class="institutional-logos">
+                <img src="media/logo_ipn.png" alt="Instituto Politécnico Nacional" class="logo-ipn">
+                <div class="school-info">
+                    <p class="institution-name">Instituto Politécnico Nacional</p>
+                    <p class="school-name">Escuela Superior de Cómputo</p>
+                </div>
+                <img src="media/logo_escom.png" alt="ESCOM IPN" class="logo-escom">
+            </div>
+        </div>
+        
+        <div class="header-main">
+            <div class="header-content">
+                <h1>Seguridad en Sistemas Operativos</h1>
+                <p class="subtitle">Investigación Unidad 6 - 4CV3</p>
+            </div>
+        </div>
+        
+        <nav class="main-nav">
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="seguridad.html" class="active">Seguridad en SO</a></li>
+                <li><a href="virtualizacion.html">Virtualización</a></li>
+                <li><a href="#quiz">Cuestionario</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Breadcrumbs -->
+    <div class="breadcrumbs">
+        <div class="container">
+            <a href="index.html">Inicio</a> &raquo; <span>Seguridad en Sistemas Operativos</span>
+        </div>
+    </div>
+
+    <!-- Contenido principal mejorado -->
+    <main class="contenido-principal seguridad-content">
+        <!-- Sección de introducción -->
+        <section class="intro-section">
+            <div class="section-header">
+                <h2>6.1 El ambiente de seguridad</h2>
+                <div class="section-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11V11.99z"/>
+                    </svg>
+                </div>
+            </div>
+            
+            <div class="intro-content">
+                <p class="lead">La seguridad del sistema operativo es vital, ya que constituye la base de la seguridad general del sistema. Un sistema operativo comprometido puede provocar filtraciones de datos, pérdida de información confidencial y proporcionar a los atacantes una plataforma para lanzar nuevos ataques dentro de la red.</p>
+                
+                <div class="security-pillars">
+                    <div class="pillar">
+                        <div class="pillar-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 3c-4.97 0-9 3.19-9 7 0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h1v1c0 1.1.9 2 2 2h4c1.1 0 2-.9 2-2v-1h1c.55 0 1-.45 1-1v-1.26c1.81-1.27 3-3.36 3-5.74 0-3.81-4.03-7-9-7zm-5 7c0-.55.45-1 1-1s1 .45 1 1-.45 1-1 1-1-.45-1-1zm4 0c0-.55.45-1 1-1s1 .45 1 1-.45 1-1 1-1-.45-1-1zm4 0c0-.55.45-1 1-1s1 .45 1 1-.45 1-1 1-1-.45-1-1z"/>
+                            </svg>
+                        </div>
+                        <h3>Confidencialidad</h3>
+                        <p>Garantiza que la información confidencial solo sea accesible para usuarios autorizados.</p>
+                        <ul>
+                            <li>Autenticación de usuarios (contraseñas, MFA, biométricos)</li>
+                            <li>Controles de acceso (ACL, RBAC, ABAC)</li>
+                            <li>Cifrado de datos (AES, RSA, ECC)</li>
+                            <li>Mecanismos de aislamiento (sandboxing, namespaces)</li>
+                        </ul>
+                        
+                        <div class="code-block">
+                            <span class="code-comment">// Ejemplo de implementación de control de acceso en Linux</span><br>
+                            <span class="code-keyword">chmod</span> 750 archivo.conf <span class="code-comment"># Solo el dueño puede leer/escribir, grupo puede leer</span><br>
+                            <span class="code-keyword">chown</span> root:admin archivo.conf <span class="code-comment"># Cambia dueño y grupo</span><br>
+                            <span class="code-keyword">setfacl</span> -m u:usuario:r-- archivo.conf <span class="code-comment"># ACL específica</span>
+                        </div>
+                    </div>
+                    
+                    <div class="pillar">
+                        <div class="pillar-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/>
+                            </svg>
+                        </div>
+                        <h3>Integridad</h3>
+                        <p>Implica precisión y consistencia de datos a lo largo de su ciclo de vida.</p>
+                        <ul>
+                            <li>Sumas de comprobación (SHA-256, MD5)</li>
+                            <li>Firmas digitales (PKI, certificados X.509)</li>
+                            <li>Auditorías y monitoreo (SIEM, logs)</li>
+                            <li>Transacciones atómicas (journaling, WAL)</li>
+                            <li>Control de versiones y cambios</li>
+                        </ul>
+                        
+                        <div class="code-block">
+                            <span class="code-comment"># Ejemplo: Verificación de integridad con SHA-256</span><br>
+                            <span class="code-keyword">import</span> hashlib<br><br>
+                            <span class="code-keyword">def</span> <span class="code-function">calculate_sha256</span>(file_path):<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">with</span> open(file_path, <span class="code-string">'rb'</span>) <span class="code-keyword">as</span> f:<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;file_hash = hashlib.sha256()<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">while</span> chunk := f.read(8192):<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;file_hash.update(chunk)<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">return</span> file_hash.hexdigest()
+                        </div>
+                    </div>
+                    
+                    <div class="pillar">
+                        <div class="pillar-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM19 18H6c-2.21 0-4-1.79-4-4 0-2.05 1.53-3.76 3.56-3.97l1.07-.11.5-.95C8.08 7.14 9.94 6 12 6c2.62 0 4.88 1.86 5.39 4.43l.3 1.5 1.53.11c1.56.1 2.78 1.41 2.78 2.96 0 1.65-1.35 3-3 3z"/>
+                            </svg>
+                        </div>
+                        <h3>Disponibilidad</h3>
+                        <p>Busca garantizar que los recursos sean accesibles y funcionales.</p>
+                        <ul>
+                            <li>Redundancia (RAID, clustering)</li>
+                            <li>Mantenimiento (parches, actualizaciones)</li>
+                            <li>Planes de recuperación (backups, DRP)</li>
+                            <li>Balanceo de carga</li>
+                            <li>Protección contra DDoS</li>
+                        </ul>
+                        
+                        <div class="code-block">
+                            <span class="code-comment">// Ejemplo: Configuración básica de RAID en Linux</span><br>
+                            <span class="code-comment"># Instalar herramientas mdadm</span><br>
+                            sudo apt-get install mdadm<br><br>
+                            <span class="code-comment"># Crear RAID 1 (espejo) con dos discos</span><br>
+                            sudo mdadm --create --verbose /dev/md0 --level=1 \<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;--raid-devices=2 /dev/sdb1 /dev/sdc1<br><br>
+                            <span class="code-comment"># Crear sistema de archivos y montar</span><br>
+                            sudo mkfs.ext4 /dev/md0<br>
+                            sudo mkdir /mnt/raid<br>
+                            sudo mount /dev/md0 /mnt/raid
+                        </div>
+                    </div>
+                </div>
+                
+                <figure class="featured-image">
+                    <img src="media/image3.png" alt="Áreas estratégicas en seguridad informática">
+                    <figcaption>Figura 6. Representación visual de áreas estratégicas en seguridad informática</figcaption>
+                </figure>
+            </div>
+        </section>
+
+        <!-- Sección de seguridad en SO -->
+        <section class="security-section">
+            <div class="section-header">
+                <h2>6.1.1 Seguridad en los sistemas operativos</h2>
+                <div class="section-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-1 6h2v2h-2V7zm0 4h2v6h-2v-6z"/>
+                    </svg>
+                </div>
+            </div>
+            
+            <div class="security-types">
+                <article class="security-type external">
+                    <h3>Seguridad Externa</h3>
+                    <p>Engloba los mecanismos que actúan fuera del sistema operativo:</p>
+                    
+                    <div class="security-features">
+                        <div class="feature">
+                            <h4>Seguridad Física</h4>
+                            <p>Protección contra desastres y eventos adversos:</p>
+                            <ul>
+                                <li>Prevención de incendios, humos, inundaciones</li>
+                                <li>Control de temperatura y limpieza (20-25°C ideal)</li>
+                                <li>Acceso físico regulado (tarjetas RFID, huellas, reconocimiento facial)</li>
+                                <li>Protección contra EMI/RFI (interferencias electromagnéticas)</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="feature">
+                            <h4>Seguridad de Administración</h4>
+                            <p>Mecanismos para impedir el acceso lógico no autorizado:</p>
+                            <ul>
+                                <li>Autenticación multifactor (MFA)</li>
+                                <li>Políticas de contraseñas (longitud mínima 12 caracteres, complejidad)</li>
+                                <li>Rotación de credenciales (cada 90 días)</li>
+                                <li>Principio de menor privilegio</li>
+                            </ul>
+                            
+                            <div class="code-block">
+                                <span class="code-comment"># Ejemplo: Configuración de políticas de contraseñas en Linux</span><br>
+                                <span class="code-comment"># Editar /etc/pam.d/common-password</span><br>
+                                password requisite pam_pwquality.so retry=3 \<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;minlen=12 difok=3 ucredit=-1 lcredit=-1 dcredit=-1 ocredit=-1<br><br>
+                                <span class="code-comment"># Configurar expiración de contraseñas</span><br>
+                                <span class="code-keyword">chage</span> -M 90 -m 7 -W 14 usuario
+                            </div>
+                        </div>
+                        
+                        <div class="feature">
+                            <h4>Criptografía</h4>
+                            <p>Proceso de encriptado o cifrado de datos:</p>
+                            <ul>
+                                <li>Cifrado simétrico (AES-256, 3DES)</li>
+                                <li>Cifrado asimétrico (RSA 2048+, ECC)</li>
+                                <li>Protocolos seguros (TLS 1.2+, SSH, IPsec)</li>
+                                <li>HSM (Hardware Security Modules) para gestión de claves</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <figure class="security-image">
+                        <img src="media/image5.png" alt="Medidas de seguridad perimetral">
+                        <figcaption>Figura 3. Ilustración de medidas de seguridad perimetral en entornos digitales</figcaption>
+                    </figure>
+                </article>
+                
+                <article class="security-type internal">
+                    <h3>Seguridad Interna</h3>
+                    <p>Mecanismos que operan dentro del sistema operativo:</p>
+                    
+                    <div class="security-features">
+                        <div class="feature">
+                            <h4>Seguridad del Procesador</h4>
+                            <p>Protección a nivel de hardware:</p>
+                            <ul>
+                                <li>Modos de ejecución (anillo 0/kernel, anillo 3/user)</li>
+                                <li>Protección de memoria (MMU, segmentación, paginación)</li>
+                                <li>Extensiones de seguridad (Intel SGX, ARM TrustZone)</li>
+                                <li>Prevención de exploits (DEP, ASLR, Shadow Stack)</li>
+                            </ul>
+                            
+                            <div class="code-block">
+                                <span class="code-comment">// Ejemplo: Habilitar ASLR en Linux</span><br>
+                                <span class="code-comment"># Verificar estado actual</span><br>
+                                cat /proc/sys/kernel/randomize_va_space<br><br>
+                                <span class="code-comment"># Valores posibles:</span><br>
+                                <span class="code-comment"># 0 = Desactivado</span><br>
+                                <span class="code-comment"># 1 = Aleatorización conservadora</span><br>
+                                <span class="code-comment"># 2 = Aleatorización completa</span><br><br>
+                                <span class="code-comment"># Habilitar aleatorización completa</span><br>
+                                echo 2 > /proc/sys/kernel/randomize_va_space
+                            </div>
+                        </div>
+                        
+                        <div class="feature">
+                            <h4>Seguridad de la Memoria</h4>
+                            <p>Protección contra accesos no autorizados:</p>
+                            <ul>
+                                <li>Protección entre procesos (address space isolation)</li>
+                                <li>Canarios de pila (stack canaries)</li>
+                                <li>Protección contra buffer overflows (NX bit)</li>
+                                <li>Sanitización de memoria antes de liberarla</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="feature">
+                            <h4>Seguridad de Archivos</h4>
+                            <p>Protección de datos almacenados:</p>
+                            <ul>
+                                <li>Permisos POSIX (rwx para usuario/grupo/otros)</li>
+                                <li>Listas de control de acceso (ACLs)</li>
+                                <li>Atributos extendidos (immutable, append-only)</li>
+                                <li>Sistemas de archivos con journaling (ext4, NTFS)</li>
+                                <li>Cifrado a nivel de archivo (eCryptfs) o disco (LUKS)</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <figure class="security-image">
+                        <img src="media/image4.png" alt="Representación binaria">
+                        <figcaption>Figura 2. Representación binaria utilizada en sistemas digitales</figcaption>
+                    </figure>
+                </article>
+            </div>
+        </section>
+
+        <!-- Sección de control de acceso -->
+        <section class="access-control-section">
+            <div class="section-header">
+                <h2>6.1.2 Control de acceso a los recursos</h2>
+                <div class="section-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                    </svg>
+                </div>
+            </div>
+            
+            <div class="access-control-content">
+                <p class="lead">Proceso de seguridad de datos que permite a las organizaciones gestionar quién está autorizado a acceder a los datos y recursos corporativos. Utiliza políticas que verifican que los usuarios sean quienes afirman ser y garantiza niveles de acceso adecuados.</p>
+                
+                <div class="access-components">
+                    <div class="component">
+                        <h3>1. Autenticación</h3>
+                        <p>Proceso inicial de establecer la identidad de un usuario. Métodos comunes:</p>
+                        <ul>
+                            <li>Contraseñas (hash con sal, PBKDF2, bcrypt)</li>
+                            <li>Certificados digitales (X.509, PGP)</li>
+                            <li>Biometría (huellas, reconocimiento facial)</li>
+                            <li>Tokens (TOTP, FIDO2)</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="component">
+                        <h3>2. Autorización</h3>
+                        <p>Especifica los derechos y privilegios de acceso a los recursos:</p>
+                        <ul>
+                            <li>Modelos DAC, MAC, RBAC, ABAC</li>
+                            <li>Políticas basadas en atributos</li>
+                            <li>Separación de deberes (SoD)</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="component">
+                        <h3>3. Acceso a la red</h3>
+                        <p>Mecanismos para controlar acceso a recursos de red:</p>
+                        <ul>
+                            <li>802.1X (autenticación de puertos)</li>
+                            <li>NAC (Network Access Control)</li>
+                            <li>VPN (IPsec, WireGuard)</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="component">
+                        <h3>4. Gestión</h3>
+                        <p>Administración del sistema de control de acceso:</p>
+                        <ul>
+                            <li>Provisionamiento automatizado</li>
+                            <li>Federación de identidad (SAML, OAuth, OpenID)</li>
+                            <li>SSO (Single Sign-On)</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="component">
+                        <h3>5. Auditoría</h3>
+                        <p>Recopilación de datos sobre la actividad del usuario:</p>
+                        <ul>
+                            <li>Logs centralizados (SIEM)</li>
+                            <li>Análisis de comportamiento (UEBA)</li>
+                            <li>Reportes de cumplimiento</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="access-types">
+                    <h3>Tipos de Controladores de Acceso</h3>
+                    
+                    <div class="access-type-cards">
+                        <div class="type-card">
+                            <h4>ABAC</h4>
+                            <p>Basado en atributos del usuario, recurso y contexto. Ejemplo:</p>
+                            <div class="code-block">
+                                <span class="code-keyword">if</span> (user.department == "HR" <span class="code-keyword">&&</span> <br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;resource.sensitivity <= user.clearance <span class="code-keyword">&&</span><br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;time.now() between "09:00" and "17:00") {<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">grant</span> access;<br>
+                                }
+                            </div>
+                        </div>
+                        
+                        <div class="type-card">
+                            <h4>RBAC</h4>
+                            <p>Basado en roles predefinidos. Ejemplo en Linux:</p>
+                            <div class="code-block">
+                                <span class="code-comment"># Crear rol</span><br>
+                                sudo groupadd -r webadmin<br><br>
+                                <span class="code-comment"># Asignar permisos</span><br>
+                                sudo chown -R root:webadmin /var/www<br>
+                                sudo chmod -R 750 /var/www<br><br>
+                                <span class="code-comment"># Asignar usuario al rol</span><br>
+                                sudo usermod -aG webadmin usuario1
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <figure class="access-image">
+                    <img src="media/image7.jpeg" alt="Control de acceso físico">
+                    <figcaption>Figura 5. Ilustración de dispositivos y mecanismos de control de acceso físico</figcaption>
+                </figure>
+            </div>
+        </section>
+
+        <!-- Sección de matrices de acceso -->
+        <section class="matrix-section">
+            <div class="section-header">
+                <h2>6.1.3 Implementación de matrices de acceso</h2>
+                <div class="section-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
+                    </svg>
+                </div>
+            </div>
+            
+            <div class="matrix-content">
+                <div class="matrix-info">
+                    <article>
+                        <h3>Dominios de protección</h3>
+                        <p>Un dominio es un conjunto de parejas (objeto, derechos). Cada pareja determina un objeto y cierto subconjunto de las operaciones que se pueden llevar a cabo en él.</p>
+                        <p>Un derecho es el permiso para realizar alguna de las operaciones. Es posible que un objeto se encuentre en varios dominios con distintos derechos en cada dominio.</p>
+                        
+                        <div class="code-block">
+                            <span class="code-comment">// Estructura de datos para un dominio de protección</span><br>
+                            <span class="code-keyword">struct</span> ProtectionDomain {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;string name;<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;map&lt;Resource, PermissionSet&gt; accessRights;<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;vector&lt;Process&gt; processes;<br>
+                            };
+                        </div>
+                    </article>
+                    
+                    <article>
+                        <h3>Matriz de acceso</h3>
+                        <p>El modelo de protección del sistema se puede ver en forma abstracta como una matriz:</p>
+                        <ul>
+                            <li><strong>Sujeto:</strong> Una entidad capaz de acceder a los objetos (equiparable con el de proceso).</li>
+                            <li><strong>Objeto:</strong> Cualquier cosa cuyo acceso debe controlarse (archivos, programas, segmentos de memoria).</li>
+                            <li><strong>Derecho de acceso:</strong> La manera en que un sujeto accede a un objeto (Leer, Escribir, Ejecutar).</li>
+                        </ul>
+                        
+                        <div class="code-block">
+                            <span class="code-comment">// Implementación básica de una matriz de acceso</span><br>
+                            <span class="code-keyword">class</span> AccessMatrix {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;map&lt;Subject, map&lt;Object, PermissionSet&gt;&gt; matrix;<br><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">bool</span> checkPermission(Subject s, Object o, Permission p) {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">return</span> matrix[s][o].contains(p);<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                            };
+                        </div>
+                    </article>
+                </div>
+                
+                <figure class="matrix-image">
+                    <img src="media/image8.png" alt="Ejemplo de matriz de acceso">
+                    <figcaption>Figura 10. Ejemplo gráfico de la implementación de matrices de acceso</figcaption>
+                </figure>
+            </div>
+        </section>
+
+        <!-- Sección de modelos formales -->
+        <section class="models-section">
+            <div class="section-header">
+                <h2>6.1.4 Modelos formales de seguridad</h2>
+                <div class="section-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 3L1 9l11 6 9-4.91V17h2V9M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z"/>
+                    </svg>
+                </div>
+            </div>
+            
+            <div class="models-content">
+                <p class="lead">Estructuras lógicas usadas para definir, analizar y garantizar que un sistema informático cumpla políticas de seguridad específicas, especialmente en lo que respecta al control de acceso y la confidencialidad, integridad y disponibilidad de la información.</p>
+                
+                <div class="model-cards">
+                    <div class="model-card">
+                        <h3>Modelo Bell-LaPadula (BLP)</h3>
+                        <p class="model-subtitle">Enfocado en la confidencialidad</p>
+                        <ul>
+                            <li>Diseñado para entornos militares</li>
+                            <li>No leer hacia arriba (no read up)</li>
+                            <li>No escribir hacia abajo (no write down)</li>
+                            <li>Implementado en SELinux, Trusted Solaris</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="model-card">
+                        <h3>Modelo Biba</h3>
+                        <p class="model-subtitle">Enfocado en la integridad</p>
+                        <ul>
+                            <li>Inverso al Bell-LaPadula</li>
+                            <li>No leer hacia abajo (no read down)</li>
+                            <li>No escribir hacia arriba (no write up)</li>
+                            <li>Usado en sistemas financieros</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="model-card">
+                        <h3>Modelo Clark-Wilson</h3>
+                        <p class="model-subtitle">Enfocado en integridad comercial</p>
+                        <ul>
+                            <li>Usa transacciones bien formadas</li>
+                            <li>Separación de deberes</li>
+                            <li>Procedimientos de verificación</li>
+                            <li>Implementado en sistemas bancarios</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="model-card">
+                        <h3>Modelo de Lattice</h3>
+                        <p class="model-subtitle">Basado en jerarquías y dominios</p>
+                        <ul>
+                            <li>Generaliza a BLP y Biba</li>
+                            <li>Niveles de seguridad y etiquetas</li>
+                            <li>Usado en sistemas multinivel</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="model-card">
+                        <h3>Modelo Brewer-Nash</h3>
+                        <p class="model-subtitle">Prevención de conflictos de interés</p>
+                        <ul>
+                            <li>También llamado "Chinese Wall"</li>
+                            <li>Restringe acceso según historial</li>
+                            <li>Usado en consultorías y auditorías</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+
+        <!-- Cuestionario interactivo -->
+        <section id="quiz" class="quiz-container">
+            <h2 class="section-title">Cuestionario sobre Seguridad en Sistemas Operativos</h2>
+            <p class="section-subtitle">Evalúa tu comprensión de los conceptos presentados</p>
+            
+            <form id="security-quiz">
+                <div class="quiz-question">
+                    <p>1. ¿Cuál de los siguientes NO es uno de los tres pilares fundamentales de la seguridad informática?</p>
+                    <div class="quiz-options">
+                        <label class="quiz-option"><input type="radio" name="q1" value="a"> Confidencialidad</label>
+                        <label class="quiz-option"><input type="radio" name="q1" value="b"> Integridad</label>
+                        <label class="quiz-option"><input type="radio" name="q1" value="c"> Disponibilidad</label>
+                        <label class="quiz-option"><input type="radio" name="q1" value="d"> Accesibilidad</label>
+                    </div>
+                </div>
+                
+                <div class="quiz-question">
+                    <p>2. En el modelo Bell-LaPadula, la regla "no leer hacia arriba" (no read up) protege principalmente:</p>
+                    <div class="quiz-options">
+                        <label class="quiz-option"><input type="radio" name="q2" value="a"> La integridad de los datos</label>
+                        <label class="quiz-option"><input type="radio" name="q2" value="b"> La confidencialidad de los datos</label>
+                        <label class="quiz-option"><input type="radio" name="q2" value="c"> La disponibilidad del sistema</label>
+                        <label class="quiz-option"><input type="radio" name="q2" value="d"> El rendimiento del sistema</label>
+                    </div>
+                </div>
+                
+                <div class="quiz-question">
+                    <p>3. ¿Cuál de los siguientes mecanismos es más efectivo para proteger contra ataques de buffer overflow?</p>
+                    <div class="quiz-options">
+                        <label class="quiz-option"><input type="radio" name="q3" value="a"> ASLR (Address Space Layout Randomization)</label>
+                        <label class="quiz-option"><input type="radio" name="q3" value="b"> DEP (Data Execution Prevention)</label>
+                        <label class="quiz-option"><input type="radio" name="q3" value="c"> Stack canaries</label>
+                        <label class="quiz-option"><input type="radio" name="q3" value="d"> Todos los anteriores</label>
+                    </div>
+                </div>
+                
+                <div class="quiz-question">
+                    <p>4. En el contexto de control de acceso, ¿qué significa RBAC?</p>
+                    <div class="quiz-options">
+                        <label class="quiz-option"><input type="radio" name="q4" value="a"> Role-Based Access Control</label>
+                        <label class="quiz-option"><input type="radio" name="q4" value="b"> Rule-Based Access Control</label>
+                        <label class="quiz-option"><input type="radio" name="q4" value="c"> Resource-Based Access Control</label>
+                        <label class="quiz-option"><input type="radio" name="q4" value="d"> Risk-Based Access Control</label>
+                    </div>
+                </div>
+                
+                <div class="quiz-question">
+                    <p>5. ¿Cuál de los siguientes NO es un mecanismo típico de seguridad externa?</p>
+                    <div class="quiz-options">
+                        <label class="quiz-option"><input type="radio" name="q5" value="a"> Firewalls</label>
+                        <label class="quiz-option"><input type="radio" name="q5" value="b"> Sistemas de detección de intrusos</label>
+                        <label class="quiz-option"><input type="radio" name="q5" value="c"> Protección de memoria</label>
+                        <label class="quiz-option"><input type="radio" name="q5" value="d"> VPNs</label>
+                    </div>
+                </div>
+                
+                <div class="quiz-question">
+                    <p>6. ¿Qué modelo de seguridad es el inverso del modelo Bell-LaPadula?</p>
+                    <div class="quiz-options">
+                        <label class="quiz-option"><input type="radio" name="q6" value="a"> Modelo Biba</label>
+                        <label class="quiz-option"><input type="radio" name="q6" value="b"> Modelo Clark-Wilson</label>
+                        <label class="quiz-option"><input type="radio" name="q6" value="c"> Modelo Brewer-Nash</label>
+                        <label class="quiz-option"><input type="radio" name="q6" value="d"> Modelo Lattice</label>
+                    </div>
+                </div>
+                
+                <div class="quiz-question">
+                    <p>7. En Linux, ¿qué comando se utiliza para cambiar los permisos de un archivo?</p>
+                    <div class="quiz-options">
+                        <label class="quiz-option"><input type="radio" name="q7" value="a"> chown</label>
+                        <label class="quiz-option"><input type="radio" name="q7" value="b"> chmod</label>
+                        <label class="quiz-option"><input type="radio" name="q7" value="c"> chattr</label>
+                        <label class="quiz-option"><input type="radio" name="q7" value="d"> chgrp</label>
+                    </div>
+                </div>
+                
+                <div class="quiz-question">
+                    <p>8. ¿Qué técnica de virtualización ayuda a aislar procesos entre sí?</p>
+                    <div class="quiz-options">
+                        <label class="quiz-option"><input type="radio" name="q8" value="a"> Namespaces</label>
+                        <label class="quiz-option"><input type="radio" name="q8" value="b"> Cgroups</label>
+                        <label class="quiz-option"><input type="radio" name="q8" value="c"> Capabilities</label>
+                        <label class="quiz-option"><input type="radio" name="q8" value="d"> SELinux</label>
+                    </div>
+                </div>
+                
+                <div class="quiz-question">
+                    <p>9. ¿Cuál de los siguientes algoritmos es simétrico?</p>
+                    <div class="quiz-options">
+                        <label class="quiz-option"><input type="radio" name="q9" value="a"> RSA</label>
+                        <label class="quiz-option"><input type="radio" name="q9" value="b"> ECC</label>
+                        <label class="quiz-option"><input type="radio" name="q9" value="c"> AES</label>
+                        <label class="quiz-option"><input type="radio" name="q9" value="d"> Diffie-Hellman</label>
+                    </div>
+                </div>
+                
+                <div class="quiz-question">
+                    <p>10. ¿Qué representa una matriz de acceso en seguridad de sistemas operativos?</p>
+                    <div class="quiz-options">
+                        <label class="quiz-option"><input type="radio" name="q10" value="a"> Una tabla que muestra qué procesos están en ejecución</label>
+                        <label class="quiz-option"><input type="radio" name="q10" value="b"> Una representación de los derechos de acceso de sujetos sobre objetos</label>
+                        <label class="quiz-option"><input type="radio" name="q10" value="c"> Un mapa de memoria del sistema</label>
+                        <label class="quiz-option"><input type="radio" name="q10" value="d"> Una tabla de particiones del disco duro</label>
+                    </div>
+                </div>
+                
+                <button type="button" id="submit-quiz" class="quiz-submit">Calcular puntuación</button>
+                
+                <div id="quiz-results" class="quiz-results"></div>
+            </form>
+        </section>
+    </main>
+
+    <!-- Footer mejorado -->
+    <footer class="main-footer">
+        <div class="footer-content">
+            <div class="footer-section about">
+                <div class="footer-logo">
+                    <img src="media/logo_ipn_white.png" alt="IPN Blanco" class="footer-logo-img">
+                    <img src="media/logo_escom_white.png" alt="ESCOM Blanco" class="footer-logo-img">
+                </div>
+                <p class="footer-description">Investigación académica sobre Seguridad y Virtualización en Sistemas Operativos desarrollada por estudiantes de la Escuela Superior de Cómputo del Instituto Politécnico Nacional.</p>
+                <div class="contact">
+                    <span class="contact-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                        </svg>
+                        contacto@escom.ipn.mx
+                    </span>
+                    <span class="contact-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                        </svg>
+                        Av. Juan de Dios Bátiz, Nueva Industrial Vallejo, CDMX
+                    </span>
+                </div>
+            </div>
+            
+            <div class="footer-section links">
+                <h3 class="footer-title">Enlaces rápidos</h3>
+                <ul>
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="seguridad.html">Seguridad en SO</a></li>
+                    <li><a href="virtualizacion.html">Virtualización</a></li>
+                    <li><a href="#integrantes">Equipo</a></li>
+                    <li><a href="#quiz">Cuestionario</a></li>
+                </ul>
+            </div>
+            
+            
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2025 Instituto Politécnico Nacional - Escuela Superior de Cómputo. Todos los derechos reservados.</p>
+            <p>Investigación Unidad 6 - Sistemas Operativos: Seguridad y Virtualización</p>
+        </div>
+    </footer>
+
+    <script>
+        // Script para el cuestionario interactivo
+        document.getElementById('submit-quiz').addEventListener('click', function() {
+            // Respuestas correctas
+            const correctAnswers = {
+                q1: 'd',
+                q2: 'b',
+                q3: 'd',
+                q4: 'a',
+                q5: 'c',
+                q6: 'a',
+                q7: 'b',
+                q8: 'a',
+                q9: 'c',
+                q10: 'b'
+            };
+            
+            let score = 0;
+            let resultsHTML = '<h3>Resultados del cuestionario</h3>';
+            
+            // Verificar cada pregunta
+            for (let i = 1; i <= 10; i++) {
+                const questionName = 'q' + i;
+                const selectedOption = document.querySelector(`input[name="${questionName}"]:checked`);
+                
+                if (selectedOption) {
+                    if (selectedOption.value === correctAnswers[questionName]) {
+                        score++;
+                        resultsHTML += `<p class="correct">Pregunta ${i}: Correcta (+1 punto)</p>`;
+                    } else {
+                        resultsHTML += `<p class="incorrect">Pregunta ${i}: Incorrecta (La respuesta correcta es ${correctAnswers[questionName].toUpperCase()})</p>`;
+                    }
+                } else {
+                    resultsHTML += `<p class="incorrect">Pregunta ${i}: No respondida (La respuesta correcta es ${correctAnswers[questionName].toUpperCase()})</p>`;
+                }
+            }
+            
+            // Calcular porcentaje
+            const percentage = (score / 10) * 100;
+            let message = '';
+            
+            if (percentage >= 80) {
+                message = '¡Excelente trabajo! Dominas los conceptos de seguridad en sistemas operativos.';
+            } else if (percentage >= 60) {
+                message = 'Buen trabajo, pero hay algunos conceptos que necesitas repasar.';
+            } else {
+                message = 'Te recomendamos revisar los conceptos de seguridad nuevamente.';
+            }
+            
+            resultsHTML += `<h4>Puntuación: ${score}/10 (${percentage}%)</h4>`;
+            resultsHTML += `<p>${message}</p>`;
+            
+            // Mostrar resultados
+            const resultsDiv = document.getElementById('quiz-results');
+            resultsDiv.innerHTML = resultsHTML;
+            resultsDiv.style.display = 'block';
+            
+            // Desplazarse a los resultados
+            resultsDiv.scrollIntoView({ behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>
