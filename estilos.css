@@ -10,6 +10,7 @@
     --color-texto-light: #555;
     --color-fondo: #f8f9fa;
     --color-blanco: #fff;
+    --color-blanco1: #000080 ;
     --color-gris: #e0e0e0;
     --color-gris-light: #f1f1f1;
     --color-gris-dark: #757575;
@@ -98,16 +99,26 @@ a:hover {
 }
 
 .institution-name {
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     font-weight: 600;
     margin-bottom: 0.2rem;
 }
 
 .school-name {
-    font-size: 0.9rem;
+    font-size: 1.2rem;
     opacity: 0.9;
 }
 
+
+.school-carrera {
+    font-size: 1.0rem;
+    opacity: 0.9;
+}
+
+.school-unidad {
+    font-size: 1.0rem;
+    opacity: 0.9;
+}
 .header-main {
     padding: 2rem;
 }
@@ -149,11 +160,11 @@ a:hover {
 }
 
 .main-nav ul li a {
-    color: var(--color-blanco);
+    color: var(--color-blanco1);
     padding: 1rem 1.5rem;
     display: block;
-    font-weight: 500;
-    font-size: 1rem;
+    font-weight: 600;
+    font-size: 0.8rem;
     text-transform: uppercase;
     letter-spacing: 0.5px;
     position: relative;
@@ -198,18 +209,18 @@ a:hover {
     background-size: cover;
     background-position: center;
     color: var(--color-blanco);
-    padding: 4rem 2rem;
+    padding: 1rem 1rem;
     text-align: center;
     margin-bottom: 2rem;
 }
 
 .banner-content {
-    max-width: 800px;
+    max-width: 1100px;
     margin: 0 auto;
 }
 
 .banner h2 {
-    font-size: 2.2rem;
+    font-size: 1.5rem;
     margin-bottom: 1.5rem;
     text-shadow: 0 2px 4px rgba(0,0,0,0.3);
 }
@@ -554,6 +565,12 @@ a:hover {
     color: var(--color-blanco);
     padding: 3rem 0 0;
     margin-top: 4rem;
+}
+.main-footer1 {
+    background: linear-gradient(135deg, var(--color-primario-dark) 0%, var(--color-primario) 100%);
+    color: var(--color-blanco);
+    padding: 2rem 0 0;
+    margin-top: 1rem;
 }
 
 .footer-content {
