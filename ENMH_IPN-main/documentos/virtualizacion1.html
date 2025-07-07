@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Virtualización en Sistemas Operativos - Investigación IPN ESCOM">
+    <title>Virtualización en SO - IPN ESCOM</title>
+    <link rel="stylesheet" href="estilos.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Estilos adicionales para código */
+        .code-block {
+            background-color: #f5f5f5;
+            border-left: 4px solid #e98300;
+            padding: 1rem;
+            font-family: 'Courier New', monospace;
+            margin: 1.5rem 0;
+            overflow-x: auto;
+            border-radius: 0 4px 4px 0;
+        }
+        
+        .code-comment {
+            color: #6a9955;
+        }
+        
+        .code-keyword {
+            color: #569cd6;
+        }
+        
+        .code-function {
+            color: #dcdcaa;
+        }
+        
+        .code-string {
+            color: #ce9178;
+        }
+        
+        /* Estilos para el cuestionario */
+        .quiz-container {
+            background-color: #fff;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-top: 3rem;
+            border-top: 4px solid #1a3e72;
+        }
+        
+        .quiz-question {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .quiz-question:last-child {
+            border-bottom: none;
+        }
+        
+        .quiz-options {
+            margin-left: 1.5rem;
+        }
+        
+        .quiz-option {
+            margin-bottom: 0.5rem;
+        }
+        
+        .quiz-submit {
+            background-color: #1a3e72;
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            margin-top: 1rem;
+            transition: background-color 0.3s;
+        }
+        
+        .quiz-submit:hover {
+            background-color: #0d2b56;
+        }
+        
+        .quiz-results {
+            margin-top: 2rem;
+            padding: 1rem;
+            border-radius: 4px;
+            display: none;
+        }
+        
+        .correct {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        
+        .incorrect {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        
+        /* Estilos para comparativas */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+        
+        .comparison-table th, .comparison-table td {
+            border: 1px solid #ddd;
+            padding: 0.8rem;
+            text-align: left;
+        }
+        
+        .comparison-table th {
+            background-color: #1a3e72;
+            color: white;
+        }
+        
+        .comparison-table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header mejorado -->
+    <header class="main-header">
+        <div class="header-top">
+            <div class="institutional-logos">
+                <img src="media/logo_ipn.png" alt="Instituto Politécnico Nacional" class="logo-ipn">
+                <div class="school-info">
+                    <p class="institution-name">Instituto Politécnico Nacional</p>
+                    <p class="school-name">Escuela Superior de Cómputo</p>
+                </div>
+                <img src="media/logo_escom.png" alt="ESCOM IPN" class="logo-escom">
+            </div>
+        </div>
+        
+        <div class="header-main">
+            <div class="header-content">
+                <h1>Virtualización en Sistemas Operativos</h1>
+                <p class="subtitle">Investigación Unidad 6 - 4CV3</p>
+            </div>
+        </div>
+        
+        <nav class="main-nav">
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="seguridad.html">Seguridad en SO</a></li>
+                <li><a href="virtualizacion.html" class="active">Virtualización</a></li>
+                <li><a href="#quiz">Cuestionario</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Breadcrumbs -->
+    <div class="breadcrumbs">
+        <div class="container">
+            <a href="index.html">Inicio</a> &raquo; <span>Virtualización en Sistemas Operativos</span>
+        </div>
+    </div>
+
+    <!-- Contenido principal mejorado -->
+    <main class="contenido-principal virtualizacion-content">
+        <!-- Sección de introducción -->
+        <section class="intro-section">
+            <div class="section-header">
+                <h2>6.2 Virtualización</h2>
+                <div class="section-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M21 3H3c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H3V5h18v14zM8 15c0-1.66 1.34-3 3-3 .35 0 .69.07 1 .18V6h5v2h-3v7.03c-.02 1.64-1.35 2.97-3 2.97-1.66 0-3-1.34-3-3z"/>
+                    </svg>
+                </div>
+            </div>
+            
+            <div class="intro-content">
+                <p class="lead">La virtualización en sistemas operativos consiste en crear entornos de software simulados (máquinas virtuales) que imitan el hardware de una computadora física, permitiendo ejecutar múltiples sistemas operativos o aplicaciones en un solo dispositivo.</p>
+                
+                <div class="virtualization-benefits">
+                    <div class="benefit-card">
+                        <h3>Beneficios de la Virtualización</h3>
+                        <ul>
+                            <li><strong>Consolidación de servidores:</strong> Reducción de hardware físico</li>
+                            <li><strong>Aislamiento:</strong> Fallos en una VM no afectan a otras</li>
+                            <li><strong>Portabilidad:</strong> Migración fácil entre hosts</li>
+                            <li><strong>Eficiencia:</strong> Mejor utilización de recursos</li>
+                            <li><strong>Pruebas:</strong> Entornos aislados para desarrollo</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="benefit-card">
+                        <h3>Casos de Uso Comunes</h3>
+                        <ul>
+                            <li>Centros de datos y computación en la nube</li>
+                            <li>Desarrollo y pruebas de software</li>
+                            <li>Ejecución de aplicaciones heredadas</li>
+                            <li>Seguridad (sandboxing)</li>
+                            <li>Escritorios virtuales (VDI)</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <figure class="virtualization-architecture">
+                    <img src="media/virtualization-arch.png" alt="Arquitectura de virtualización">
+                    <figcaption>Figura 1. Arquitectura básica de sistemas de virtualización</figcaption>
+                </figure>
+            </div>
+        </section>
+
+        <!-- Sección de emulación -->
+        <section class="emulation-section">
+            <div class="section-header">
+                <h2>6.2.1 Emulación</h2>
+                <div class="section-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M21 3H3c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H3V5h18v14zM8 15c0-1.66 1.34-3 3-3 .35 0 .69.07 1 .18V6h5v2h-3v7.03c-.02 1.64-1.35 2.97-3 2.97-1.66 0-3-1.34-3-3z"/>
+                    </svg>
+                </div>
+            </div>
+            
+            <div class="emulation-content">
+                <p>La emulación es una técnica que permite a un sistema informático (el anfitrión) imitar las funciones de otro sistema (el invitado) para que el software diseñado para este último pueda ejecutarse en el primero.</p>
+                
+                <div class="emulation-details">
+                    <article>
+                        <h3>Características Clave</h3>
+                        <ul>
+                            <li>Traducción completa de instrucciones en tiempo real</li>
+                            <li>Puede emular arquitecturas de hardware diferentes</li>
+                            <li>Mayor flexibilidad pero menor rendimiento</li>
+                            <li>Útil para sistemas heredados o arquitecturas obsoletas</li>
+                        </ul>
+                    </article>
+                    
+                    <article>
+                        <h3>Ejemplos Populares</h3>
+                        <ul>
+                            <li><strong>QEMU:</strong> Emulador genérico de máquinas completas</li>
+                            <li><strong>DOSBox:</strong> Emulador de sistemas DOS</li>
+                            <li><strong>MAME:</strong> Emulador de hardware arcade</li>
+                            <li><strong>Wine:</strong> Capa de compatibilidad para aplicaciones Windows en Linux</li>
+                        </ul>
+                    </article>
+                </div>
+                
+                <div class="code-block">
+                    <span class="code-comment"># Ejemplo: Ejecutar un sistema ARM en x86 usando QEMU</span><br>
+                    qemu-system-arm -machine virt -cpu cortex-a15 \<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;-kernel zImage -initrd rootfs.img \<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;-append "console=ttyAMA0" -nographic
+                </div>
+                
+                <div class="comparison-table-container">
+                    <h3>Comparación: Emulación vs Virtualización</h3>
+                    <table class="comparison-table">
+                        <tr>
+                            <th>Característica</th>
+                            <th>Emulación</th>
+                            <th>Virtualización</th>
+                        </tr>
+                        <tr>
+                            <td>Rendimiento</td>
+                            <td>Bajo (traducción de instrucciones)</td>
+                            <td>Alto (ejecución nativa)</td>
+                        </tr>
+                        <tr>
+                            <td>Arquitectura</td>
+                            <td>Puede ser diferente (ARM en x86)</td>
+                            <td>Debe ser la misma</td>
+                        </tr>
+                        <tr>
+                            <td>Uso de recursos</td>
+                            <td>Alto</td>
+                            <td>Moderado</td>
+                        </tr>
+                        <tr>
+                            <td>Caso de uso típico</td>
+                            <td>Sistemas heredados, desarrollo cross-platform</td>
+                            <td>Servidores, cloud computing</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección de virtualización asistida por hardware -->
+        <section class="hardware-virt-section">
+            <div class="section-header">
+                <h2>6.2.2 Virtualización asistida por hardware</h2>
+                <div class="section-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M9 3v2h6V3h2v2h4v3h-2v6h2v3h-4v2h-2v-2H9v2H7v-2H3v-3h2V8H3V5h4V3h2zm2 2h2v2h-2V5zM5 9h14v6H5V9zm2 2v2h2v-2H7zm6 0v2h2v-2h-2z"/>
+                    </svg>
+                </div>
+            </div>
+            
+            <div class="hardware-virt-content">
+                <p>La virtualización asistida por hardware utiliza características específicas del procesador para mejorar el rendimiento y la seguridad de las máquinas virtuales.</p>
+                
+                <div class="hw-virt-features">
+                    <article>
+                        <h3>Tecnologías Principales</h3>
+                        <ul>
+                            <li><strong>Intel VT-x:</strong> Extensiones de virtualización de Intel</li>
+                            <li><strong>AMD-V:</strong> Tecnología de virtualización de AMD</li>
+                            <li><strong>SLAT (Second Level Address Translation):</strong> Para mejor manejo de memoria</li>
+                            <li><strong>IOMMU:</strong> Asignación directa de dispositivos a VMs</li>
+                        </ul>
+                    </article>
+                    
+                    <article>
+                        <h3>Ventajas Clave</h3>
+                        <ul>
+                            <li>Rendimiento cercano al nativo</li>
+                            <li>Mayor seguridad (aislamiento de hardware)</li>
+                            <li>Soporte para sistemas operativos no modificados</li>
+                            <li>Reducción de sobrecarga del hipervisor</li>
+                        </ul>
+                    </article>
+                </div>
+                
+                <div class="code-block">
+                    <span class="code-comment"># Verificar soporte de virtualización en Linux</span><br>
+                    grep -E '(vmx|svm)' /proc/cpuinfo<br><br>
+                    <span class="code-comment"># Habilitar módulos KVM</span><br>
+                    sudo modprobe kvm<br>
+                    sudo modprobe kvm_intel  <span class="code-comment"># o kvm_amd para procesadores AMD</span><br><br>
+                    <span class="code-comment"># Verificar que KVM esté funcionando</span><br>
+                    lsmod | grep kvm
+                </div>
+                
+                <div class="hypervisor-types">
+                    <h3>Tipos de Hipervisores</h3>
+                    
+                    <div class="hypervisor-cards">
+                        <div class="hypervisor-card">
+                            <h4>Tipo 1 (Bare-metal)</h4>
+                            <ul>
+                                <li>Ejecuta directamente sobre el hardware</li>
+                                <li>Alto rendimiento</li>
+                                <li>Ejemplos: VMware ESXi, Microsoft Hyper-V, Xen</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="hypervisor-card">
+                            <h4>Tipo 2 (Hosted)</h4>
+                            <ul>
+                                <li>Ejecuta como aplicación en un SO anfitrión</li>
+                                <li>Mayor flexibilidad</li>
+                                <li>Ejemplos: VirtualBox, VMware Workstation, QEMU</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <figure class="hypervisor-arch">
+                    <img src="media/hypervisor-types.png" alt="Tipos de hipervisores">
+                    <figcaption>Figura 2. Arquitectura de hipervisores Tipo 1 y Tipo 2</figcaption>
+                </figure>
+            </div>
+        </section>
+
+        <!-- Sección de paravirtualización -->
+        <section class="paravirt-section">
+            <div class="section-header">
+                <h2>6.2.3 Paravirtualización</h2>
+                <div class="section-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M21 3H3c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H3V5h18v14zM9 8h2v8H9zm4 0h2v8h-2z"/>
+                    </svg>
+                </div>
+            </div>
+            
+            <div class="paravirt-content">
+                <p>La paravirtualización es una técnica de virtualización donde el sistema operativo invitado es modificado para ser consciente de que está siendo virtualizado, lo que permite un mejor rendimiento.</p>
+                
+                <div class="paravirt-details">
+                    <article>
+                        <h3>Características Principales</h3>
+                        <ul>
+                            <li>Requiere modificaciones en el kernel del SO invitado</li>
+                            <li>Proporciona mejor rendimiento que la virtualización completa</li>
+                            <li>Usa llamadas hipervisor (hypercalls) en lugar de instrucciones privilegiadas</li>
+                            <li>Menor sobrecarga en operaciones de E/S</li>
+                        </ul>
+                    </article>
+                    
+                    <article>
+                        <h3>Implementaciones Notables</h3>
+                        <ul>
+                            <li><strong>Xen:</strong> Hipervisor que popularizó la paravirtualización</li>
+                            <li><strong>Virtio:</strong> Framework para dispositivos virtualizados</li>
+                            <li><strong>Hyper-V Enlightenments:</strong> Optimizaciones para Windows en Hyper-V</li>
+                        </ul>
+                    </article>
+                </div>
+                
+                <div class="code-block">
+                    <span class="code-comment"># Ejemplo: Configurar un disco paravirtualizado en KVM</span><br>
+                    <span class="code-comment"># Usando virtio para mejor rendimiento</span><br>
+                    &lt;disk type='file' device='disk'&gt;<br>
+                    &nbsp;&nbsp;&lt;driver name='qemu' type='qcow2' cache='none'/&gt;<br>
+                    &nbsp;&nbsp;&lt;source file='/path/to/disk.qcow2'/&gt;<br>
+                    &nbsp;&nbsp;&lt;target dev='vda' bus='virtio'/&gt;<br>
+                    &lt;/disk&gt;
+                </div>
+                
+                <div class="virtio-architecture">
+                    <h3>Arquitectura Virtio</h3>
+                    <p>Virtio es un estándar para dispositivos virtuales que aprovecha la paravirtualización:</p>
+                    <ul>
+                        <li><strong>Frontend:</strong> Controlador en el SO invitado</li>
+                        <li><strong>Backend:</strong> Implementación en el hipervisor</li>
+                        <li><strong>Virtqueue:</strong> Mecanismo de comunicación</li>
+                    </ul>
+                    
+                    <figure class="virtio-img">
+                        <img src="media/virtio-arch.png" alt="Arquitectura Virtio">
+                        <figcaption>Figura 3. Diagrama de la arquitectura Virtio</figcaption>
+                    </figure>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección de contenedores -->
+        <section class="containers-section">
+            <div class="section-header">
+                <h2>6.2.4 Contenedores</h2>
+                <div class="section-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M20 6h-3V4c0-1.1-.9-2-2-2H9c-1.1 0-2 .9-2 2v2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zM9 4h6v2H9V4zm11 16H4V8h3v2h2V8h6v2h2V8h3v12z"/>
+                    </svg>
+                </div>
+            </div>
+            
+            <div class="containers-content">
+                <p>Los contenedores son una forma de virtualización ligera que permite ejecutar múltiples instancias aisladas de aplicaciones en un solo sistema operativo anfitrión.</p>
+                
+                <div class="containers-details">
+                    <article>
+                        <h3>Características Clave</h3>
+                        <ul>
+                            <li>Comparten el kernel del sistema anfitrión</li>
+                            <li>Mucho más ligeros que las máquinas virtuales tradicionales</li>
+                            <li>Aislamiento mediante namespaces y cgroups</li>
+                            <li>Inicio rápido y alta densidad</li>
+                        </ul>
+                    </article>
+                    
+                    <article>
+                        <h3>Tecnologías Principales</h3>
+                        <ul>
+                            <li><strong>Docker:</strong> Plataforma más popular para contenedores</li>
+                            <li><strong>LXC/LXD:</strong> Contenedores Linux tradicionales</li>
+                            <li><strong>Kubernetes:</strong> Orquestador de contenedores</li>
+                            <li><strong>Podman:</strong> Alternativa a Docker sin daemon</li>
+                        </ul>
+                    </article>
+                </div>
+                
+                <div class="code-block">
+                    <span class="code-comment"># Ejemplo básico con Docker</span><br>
+                    <span class="code-comment"># Descargar una imagen de Nginx</span><br>
+                    docker pull nginx<br><br>
+                    <span class="code-comment"># Ejecutar un contenedor</span><br>
+                    docker run -d -p 8080:80 --name my-nginx nginx<br><br>
+                    <span class="code-comment"># Ver contenedores en ejecución</span><br>
+                    docker ps<br><br>
+                    <span class="code-comment"># Detener el contenedor</span><br>
+                    docker stop my-nginx
+                </div>
+                
+                <div class="containers-vs-vm">
+                    <h3>Contenedores vs Máquinas Virtuales</h3>
+                    <table class="comparison-table">
+                        <tr>
+                            <th>Característica</th>
+                            <th>Contenedores</th>
+                            <th>Máquinas Virtuales</th>
+                        </tr>
+                        <tr>
+                            <td>Nivel de aislamiento</td>
+                            <td>Proceso (namespace/cgroups)</td>
+                            <td>Hardware completo</td>
+                        </tr>
+                        <tr>
+                            <td>Tiempo de inicio</td>
+                            <td>Segundos</td>
+                            <td>Minutos</td>
+                        </tr>
+                        <tr>
+                            <td>Consumo de recursos</td>
+                            <td>Mínimo</td>
+                            <td>Significativo</td>
+                        </tr>
+                        <tr>
+                            <td>Sistema operativo</td>
+                            <td>Comparte kernel con anfitrión</td>
+                            <td>Kernel completo independiente</td>
+                        </tr>
+                        <tr>
+                            <td>Portabilidad</td>
+                            <td>Alta (misma arquitectura)</td>
+                            <td>Moderada (imágenes grandes)</td>
+                        </tr>
+                    </table>
+                </div>
+                
+                <div class="container-security">
+                    <h3>Seguridad en Contenedores</h3>
+                    <p>Aunque los contenedores proporcionan aislamiento, requieren configuraciones adicionales para seguridad:</p>
+                    <ul>
+                        <li><strong>Namespaces:</strong> Aislan procesos, red, sistema de archivos</li>
+                        <li><strong>Control Groups (cgroups):</strong> Limitan uso de recursos</li>
+                        <li><strong>Capabilities:</strong> Permisos granulares para procesos</li>
+                        <li><strong>SElinux/AppArmor:</strong> Políticas de seguridad obligatorias</li>
+                        <li><strong>Imágenes firmadas:</strong> Verificación de integridad</li>
+                    </ul>
+                    
+                    <div class="code-block">
+                        <span class="code-comment"># Ejecutar un contenedor con restricciones de seguridad</span><br>
+                        docker run -d \<br>
+                        &nbsp;&nbsp;--name secure-app \<br>
+                        &nbsp;&nbsp;--cap-drop ALL \<br>
+                        &nbsp;&nbsp;--cap-add NET_BIND_SERVICE \<br>
+                        &nbsp;&nbsp;--memory 512m \<br>
+                        &nbsp;&nbsp;--pids-limit 100 \<br>
+                        &nbsp;&nbsp;--security-opt no-new-privileges \<br>
+                        &nbsp;&nbsp;nginx
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Cuestionario interactivo -->
+        <section id="quiz" class="quiz-container">
+            <h2 class="section-title">Cuestionario sobre Virtualización</h2>
+            <p class="section-subtitle">Evalúa tu comprensión de los conceptos presentados</p>
+            
+            <form id="virtualization-quiz">
+                <div class="quiz-question">
+                    <p>1. ¿Cuál de las siguientes NO es una ventaja principal de la virtualización?</p>
+                    <div class="quiz-options">
+                        <label class="quiz-option"><input type="radio" name="q1" value="a"> Consolidación de servidores</label>
+                        <label class="quiz-option"><input type="radio" name="q1" value="b"> Mayor utilización de recursos</label>
+                        <label class="quiz-option"><input type="radio" name="q1" value="c"> Aislamiento entre sistemas</label>
+                        <label class="quiz-option"><input type="radio" name="q1" value="d"> Mayor consumo energético</label>
+                    </div>
+                </div>
+                
+                <div class="quiz-question">
+                    <p>2. ¿Qué tecnología de virtualización permite ejecutar un sistema operativo ARM en hardware x86?</p>
+                    <div class="quiz-options">
+                        <label class="quiz-option"><input type="radio" name="q2" value="a"> Paravirtualización</label>
+                        <label class="quiz-option"><input type="radio" name="q2" value="b"> Virtualización asistida por hardware</label>
+                        <label class="quiz-option"><input type="radio" name="q2" value="c"> Emulación</label>
+                        <label class="quiz-option"><input type="radio" name="q2" value="d"> Contenedores</label>
+                    </div>
+                </div>
+                
+                <div class="quiz-question">
+                    <p>3. ¿Cuál de estos hipervisores es de Tipo 1 (bare-metal)?</p>
+                    <div class="quiz-options">
+                        <label class="quiz-option"><input type="radio" name="q3" value="a"> VirtualBox</label>
+                        <label class="quiz-option"><input type="radio" name="q3" value="b"> VMware Workstation</label>
+                        <label class="quiz-option"><input type="radio" name="q3" value="c"> QEMU</label>
+                        <label class="quiz-option"><input type="radio" name="q3" value="d"> VMware ESXi</label>
+                    </div>
+                </div>
+                
+                <div class="quiz-question">
+                    <p>4. En la paravirtualización, ¿qué se usa en lugar de instrucciones privilegiadas?</p>
+                    <div class="quiz-options">
+                        <label class="quiz-option"><input type="radio" name="q4" value="a"> Hypercalls</label>
+                        <label class="quiz-option"><input type="radio" name="q4" value="b"> Syscalls</label>
+                        <label class="quiz-option"><input type="radio" name="q4" value="c"> Interrupciones</label>
+                        <label class="quiz-option"><input type="radio" name="q4" value="d"> Traps</label>
+                    </div>
+                </div>
+                
+                <div class="quiz-question">
+                    <p>5. ¿Qué tecnología de Linux proporciona aislamiento entre contenedores?</p>
+                    <div class="quiz-options">
+                        <label class="quiz-option"><input type="radio" name="q5" value="a"> Namespaces</label>
+                        <label class="quiz-option"><input type="radio" name="q5" value="b"> KVM</label>
+                        <label class="quiz-option"><input type="radio" name="q5" value="c"> Hyper-V</label>
+                        <label class="quiz-option"><input type="radio" name="q5" value="d"> BIOS</label>
+                    </div>
+                </div>
+                
+                <div class="quiz-question">
+                    <p>6. ¿Qué comando de Docker se usa para construir una imagen desde un Dockerfile?</p>
+                    <div class="quiz-options">
+                        <label class="quiz-option"><input type="radio" name="q6" value="a"> docker run</label>
+                        <label class="quiz-option"><input type="radio" name="q6" value="b"> docker create</label>
+                        <label class="quiz-option"><input type="radio" name="q6" value="c"> docker build</label>
+                        <label class="quiz-option"><input type="radio" name="q6" value="d"> docker compose</label>
+                    </div>
+                </div>
+                
+                <div class="quiz-question">
+                    <p>7. ¿Qué tecnología de virtualización de Intel permite acelerar las máquinas virtuales?</p>
+                    <div class="quiz-options">
+                        <label class="quiz-option"><input type="radio" name="q7" value="a"> AMD-V</label>
+                        <label class="quiz-option"><input type="radio" name="q7" value="b"> VT-x</label>
+                        <label class="quiz-option"><input type="radio" name="q7" value="c"> PowerPC</label>
+                        <label class="quiz-option"><input type="radio" name="q7" value="d"> ARM TrustZone</label>
+                    </div>
+                </div>
+                
+                <div class="quiz-question">
+                    <p>8. ¿Cuál es la principal diferencia entre contenedores y máquinas virtuales?</p>
+                    <div class="quiz-options">
+                        <label class="quiz-option"><input type="radio" name="q8" value="a"> Los contenedores no necesitan hardware</label>
+                        <label class="quiz-option"><input type="radio" name="q8" value="b"> Los contenedores comparten el kernel del anfitrión</label>
+                        <label class="quiz-option"><input type="radio" name="q8" value="c"> Las máquinas virtuales son más ligeras</label>
+                        <label class="quiz-option"><input type="radio" name="q8" value="d"> No hay diferencia significativa</label>
+                    </div>
+                </div>
+                
+                <div class="quiz-question">
+                    <p>9. ¿Qué es Virtio en el contexto de virtualización?</p>
+                    <div class="quiz-options">
+                        <label class="quiz-option"><input type="radio" name="q9" value="a"> Un sistema operativo para virtualización</label>
+                        <label class="quiz-option"><input type="radio" name="q9" value="b"> Un estándar para dispositivos virtuales paravirtualizados</label>
+                        <label class="quiz-option"><input type="radio" name="q9" value="c"> Un tipo de hipervisor</label>
+                        <label class="quiz-option"><input type="radio" name="q9" value="d"> Una tecnología de emulación</label>
+                    </div>
+                </div>
+                
+                <div class="quiz-question">
+                    <p>10. ¿Qué orquestador de contenedores es actualmente el más popular?</p>
+                    <div class="quiz-options">
+                        <label class="quiz-option"><input type="radio" name="q10" value="a"> Docker Swarm</label>
+                        <label class="quiz-option"><input type="radio" name="q10" value="b"> Kubernetes</label>
+                        <label class="quiz-option"><input type="radio" name="q10" value="c"> Mesos</label>
+                        <label class="quiz-option"><input type="radio" name="q10" value="d"> Nomad</label>
+                    </div>
+                </div>
+                
+                <button type="button" id="submit-quiz" class="quiz-submit">Calcular puntuación</button>
+                
+                <div id="quiz-results" class="quiz-results"></div>
+            </form>
+        </section>
+    </main>
+
+    <!-- Footer mejorado -->
+    <footer class="main-footer">
+        <div class="footer-content">
+            <div class="footer-section about">
+                <div class="footer-logo">
+                    <img src="media/logo_ipn_white.png" alt="IPN Blanco" class="footer-logo-img">
+                    <img src="media/logo_escom_white.png" alt="ESCOM Blanco" class="footer-logo-img">
+                </div>
+                <p class="footer-description">Investigación académica sobre Seguridad y Virtualización en Sistemas Operativos desarrollada por estudiantes de la Escuela Superior de Cómputo del Instituto Politécnico Nacional.</p>
+                <div class="contact">
+                    <span class="contact-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                        </svg>
+                        contacto@escom.ipn.mx
+                    </span>
+                    <span class="contact-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                        </svg>
+                        Av. Juan de Dios Bátiz, Nueva Industrial Vallejo, CDMX
+                    </span>
+                </div>
+            </div>
+            
+            <div class="footer-section links">
+                <h3 class="footer-title">Enlaces rápidos</h3>
+                <ul>
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="seguridad.html">Seguridad en SO</a></li>
+                    <li><a href="virtualizacion.html">Virtualización</a></li>
+                    <li><a href="#integrantes">Equipo</a></li>
+                    <li><a href="#quiz">Cuestionario</a></li>
+                </ul>
+            </div>
+            
+            
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2025 Instituto Politécnico Nacional - Escuela Superior de Cómputo. Todos los derechos reservados.</p>
+            <p>Investigación Unidad 6 - Sistemas Operativos: Seguridad y Virtualización</p>
+        </div>
+    </footer>
+
+    <script>
+        // Script para el cuestionario interactivo
+        document.getElementById('submit-quiz').addEventListener('click', function() {
+            // Respuestas correctas
+            const correctAnswers = {
+                q1: 'd',
+                q2: 'c',
+                q3: 'd',
+                q4: 'a',
+                q5: 'a',
+                q6: 'c',
+                q7: 'b',
+                q8: 'b',
+                q9: 'b',
+                q10: 'b'
+            };
+            
+            let score = 0;
+            let resultsHTML = '<h3>Resultados del cuestionario</h3>';
+            
+            // Verificar cada pregunta
+            for (let i = 1; i <= 10; i++) {
+                const questionName = 'q' + i;
+                const selectedOption = document.querySelector(`input[name="${questionName}"]:checked`);
+                
+                if (selectedOption) {
+                    if (selectedOption.value === correctAnswers[questionName]) {
+                        score++;
+                        resultsHTML += `<p class="correct">Pregunta ${i}: Correcta (+1 punto)</p>`;
+                    } else {
+                        resultsHTML += `<p class="incorrect">Pregunta ${i}: Incorrecta (La respuesta correcta es ${correctAnswers[questionName].toUpperCase()})</p>`;
+                    }
+                } else {
+                    resultsHTML += `<p class="incorrect">Pregunta ${i}: No respondida (La respuesta correcta es ${correctAnswers[questionName].toUpperCase()})</p>`;
+                }
+            }
+            
+            // Calcular porcentaje
+            const percentage = (score / 10) * 100;
+            let message = '';
+            
+            if (percentage >= 80) {
+                message = '¡Excelente trabajo! Dominas los conceptos de virtualización.';
+            } else if (percentage >= 60) {
+                message = 'Buen trabajo, pero hay algunos conceptos que necesitas repasar.';
+            } else {
+                message = 'Te recomendamos revisar los conceptos de virtualización nuevamente.';
+            }
+            
+            resultsHTML += `<h4>Puntuación: ${score}/10 (${percentage}%)</h4>`;
+            resultsHTML += `<p>${message}</p>`;
+            
+            // Mostrar resultados
+            const resultsDiv = document.getElementById('quiz-results');
+            resultsDiv.innerHTML = resultsHTML;
+            resultsDiv.style.display = 'block';
+            
+            // Desplazarse a los resultados
+            resultsDiv.scrollIntoView({ behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>
